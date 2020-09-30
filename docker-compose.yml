@@ -33,7 +33,5 @@ cadvisor:
     - /var/run:/var/run:rw
     - /sys:/sys:ro
     - /var/lib/docker/:/var/lib/docker:ro
-  ports:
-    - 9101:8080
   expose:
-    - 9101
+    - 8080
