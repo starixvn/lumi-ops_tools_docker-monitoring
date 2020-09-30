@@ -8,23 +8,23 @@ global:
         monitor: 'docker-host-alpha'
   
   # Load and evaluate rules in this file every 'evaluation_interval' seconds.
-  rule_files:
+rule_files:
     - "alert.rules"
-  
-  # A scrape configuration containing exactly one endpoint to scrape.
-  scrape_configs:
+
+# A scrape configuration containing exactly one endpoint to scrape.
+scrape_configs:
     - job_name: 'nodeexporter'
-      scrape_interval: 5s
-      static_configs:
+        scrape_interval: 5s
+        static_configs:
         - targets: ['nodeexporter:9100']
-  
+
     - job_name: 'cadvisor'
-      scrape_interval: 5s
-      static_configs:
+        scrape_interval: 5s
+        static_configs:
         - targets: ['cadvisor:8080']
-  
+
     - job_name: 'prometheus'
-      scrape_interval: 10s
-      static_configs:
+        scrape_interval: 10s
+        static_configs:
         - targets: ['localhost:9090']
   
