@@ -1,17 +1,29 @@
----
 global:
-  evaluation_interval: 15s
-  external_labels:
-    monitor: l1
   scrape_interval: 15s
+  evaluation_interval: 15s
+
+  # Attach these labels to any time series or alerts when communicating with
+  # external systems (federation, remote storage, Alertmanager).
+  external_labels:
+    monitor: 'docker-host-alpha'
+
+# Load and evaluate rules in this file every 'evaluation_interval' seconds.
 rule_files:
-  - alert.rules
+  - 'alert.rules'
+
+# A scrape configuration containing exactly one endpoint to scrape.
 scrape_configs:
-  - job_name: prometheus
+  - job_name: 'monitoring_node_exporter'
     scrape_interval: 5s
     static_configs:
-      - targets:
-          - 'localhost:9090'
-          - 'cadvisor:8080'
-          - 'node-exporter:9100'
-          - 'nginx-exporter:9113'
+      - targets: ['monitoring_node_exporter:9100']
+
+  - job_name: 'monitoring_cadvisor'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['monitoring_cadvisor:8080']
+
+  - job_name: 'monitoring_prometheus'
+    scrape_interval: 10s
+    static_configs:
+      - targets: ['localhost:9090']
